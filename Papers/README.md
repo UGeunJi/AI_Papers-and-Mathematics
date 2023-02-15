@@ -8,4 +8,4 @@
 
 - :computer: 모델 구현
 
-- :books: 관련 논문 읽기
+- :books: Reference 탐색
