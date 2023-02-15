@@ -8,7 +8,13 @@
 
   <p> {kahe, v-xiangz, v-shren, jiansun}@microsoft.com </p>
   
-### [논문 링크](https://openaccess.thecvf.com/content_cvpr_2016/html/He_Deep_Residual_Learning_CVPR_2016_paper.html)
+### [Paper Link](https://openaccess.thecvf.com/content_cvpr_2016/html/He_Deep_Residual_Learning_CVPR_2016_paper.html)
 
 </div>
+
+
+
+
+
+## Paper Contents
 
