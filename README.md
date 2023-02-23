@@ -8,4 +8,4 @@
 
 ## AI Papers
 
-[Deep Residual Learning for Image Recognition](https://github.com/UGeunJi/AI_Papers-and-Mathematics/tree/main/Papers/Deep%20Residual%20Learning%20for%20Image%20Recognition)
+- [Deep Residual Learning for Image Recognition](https://github.com/UGeunJi/AI_Papers-and-Mathematics/tree/main/Papers/Deep%20Residual%20Learning%20for%20Image%20Recognition)
