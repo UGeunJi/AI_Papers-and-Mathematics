@@ -34,11 +34,10 @@
 5. In the BN paper, the BN layer learns gamma/beta. To implement BN in this version of Caffe, we use its provided "batch_norm_layer" (which has no gamma/beta learned) followed by "scale_layer" (which learns gamma/beta).
 6. We use Caffe's implementation of SGD with momentum: v := momentum*v + lr*g. If you want to port these models to other libraries (e.g., Torch, CNTK), please pay careful attention to the possibly different implementation of SGD with momentum: v := momentum*v + (1-momentum)*lr*g, which changes the effective learning rates.
 
-### PyTorch Model ResNet18, ResNet34, $\cdots$
+### PyTorch Model ResNet18_MNIST, ResNet34_MNIST, ResNet50_CIFAR10, ResNet101_CIFAR10, ResNet152_CIFAR10
 
 [모델 출처](https://github.com/ndb796/Deep-Learning-Paper-Review-and-Practice)
 
-[]
 
 
 <div align = "center">
