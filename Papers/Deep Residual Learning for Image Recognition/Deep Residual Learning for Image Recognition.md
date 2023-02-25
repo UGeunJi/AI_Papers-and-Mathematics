@@ -15,6 +15,17 @@
 
 
 ## Terms
+
+- CIFAR10
+- ILSVRC & COCO 2015
+- e.g.
+- i.e.
+- Caffe
+- VLAD
+- mAP
+- Layer Responses
+- IoU
+- RoI
   
   
 ## Model Realization
