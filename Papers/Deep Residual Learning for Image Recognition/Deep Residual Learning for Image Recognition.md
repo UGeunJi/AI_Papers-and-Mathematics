@@ -38,6 +38,35 @@
 
 [모델 출처](https://github.com/ndb796/Deep-Learning-Paper-Review-and-Practice)
 
+- ResNet18_MNIST, ResNet34_MNIST Accuracy
+
+![image](https://user-images.githubusercontent.com/84713532/221343108-636955cc-9883-4ce1-971c-8e18a833493c.png)
+![image](https://user-images.githubusercontent.com/84713532/221343120-1951304a-a358-4deb-ae7a-8da750a48880.png)
+
+- ResNet18_MNIST, ResNet34_MNIST Train Loss
+
+![image](https://user-images.githubusercontent.com/84713532/221343165-d6c8ef94-0afc-47ea-95b8-7c36c632fb2b.png)
+![image](https://user-images.githubusercontent.com/84713532/221343176-eb5f33cd-31f3-4135-87ba-5084c5b91584.png)
+
+#### ResNet18_MNIST's test accuracy is lower than ResNet34_MNIST, but not train loss.
+
+<br>
+<br>
+
+- ResNet50_CIFAR10, ResNet101_CIFAR10, ResNet152_CIFAR10
+
+![image](https://user-images.githubusercontent.com/84713532/221343301-5aa1d5e2-07dc-45a8-a587-e13be4f9b659.png)
+![image](https://user-images.githubusercontent.com/84713532/221343306-d0490926-d0ed-497a-a4a2-b6219d85971c.png)
+![image](https://user-images.githubusercontent.com/84713532/221343320-14e0e55f-9625-47ac-9925-7de14de48fc2.png)
+
+#### Test loss is higher and higher as layers are deeper. On the other hand, Test accuracy is lower and lower as layers are deeper.
+
+<br>
+<br>
+
+- Consideration
+
+The Performance of model was worse as layers are deeper. I think this is because of BottleNeck structure. It is also not match with paper's content, but I can't assure I realized ResNet. So I think I should experiment and revise these codes.
 
 
 <div align = "center">
