@@ -10,4 +10,4 @@
 
 - [Deep Residual Learning for Image Recognition](https://github.com/UGeunJi/AI_Papers-and-Mathematics/tree/main/Papers/Deep%20Residual%20Learning%20for%20Image%20Recognition)
 
-- Rethinking the Inception Architecture for Computer Vision
+- [Rethinking the Inception Architecture for Computer Vision](https://github.com/UGeunJi/AI_Papers-and-Mathematics/tree/main/Papers/Rethinking%20the%20Inception%20Architecture%20for%20Computer%20Vision)
