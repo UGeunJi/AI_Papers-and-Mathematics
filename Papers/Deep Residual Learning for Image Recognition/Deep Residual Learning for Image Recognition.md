@@ -16,16 +16,18 @@
 
 ## Terms
 
-- CIFAR10
-- ILSVRC & COCO 2015
-- e.g.
-- i.e.
-- Caffe
-- VLAD
-- mAP
-- Layer Responses
-- IoU
-- RoI
+- CIFAR10: CIFAR-10은 Alex Krizhevsky, Vinod Nair 및 Geoffrey Hinton이 수집한 8천만 개 작은 이미지 데이터 세트의 레이블이 지정된 하위 집합입니다. CIFAR-10 데이터 세트는 10개 클래스의 60000개 32x32 컬러 이미지로 구성되며 클래스당 6000개의 이미지가 있습니다. 50000개의 훈련 이미지와 10000개의 테스트 이미지가 있습니다.
+
+- ILSVRC & COCO 2015: ImageNet과 Microsoft의 대규모 시각 인식 챌린지
+
+- e.g.: 예를 들어
+- i.e.: 즉
+
+- Caffe: Caffe는 표현, 속도 및 모듈성을 염두에 두고 만들어진 딥러닝 프레임워크입니다. Berkeley AI Research(BAIR)와 커뮤니티 기여자가 개발했습니다. [Caffe 설명](https://caffe.berkeleyvision.org/)
+
+- mAP: Mean Average Precision. [mAP 설명](https://ctkim.tistory.com/79) 
+
+- RoI: Region of Interest 관심영역.
   
   
 ## Model Realization
