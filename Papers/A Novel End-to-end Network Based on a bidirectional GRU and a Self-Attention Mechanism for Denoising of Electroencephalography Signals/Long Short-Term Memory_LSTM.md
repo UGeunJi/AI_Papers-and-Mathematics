@@ -37,6 +37,11 @@
 바닐라 RNN은 x_t와 h_{t-1}이라는 두 개의 입력이 각각의 가중치와 곱해져서 메모리 셀의 입력이 된다. <br>
 그리고 이를 하이퍼볼릭탄젠트 함수의 입력으로 사용하고 이 값은 은닉층의 출력인 **은닉 상태(hidden state)**가 된다.
 
+> 예시
+
+![image](https://github.com/UGeunJi/AI_Papers-and-Mathematics/assets/84713532/3659ce52-1d9b-4402-adc8-d7aa7993b720)
+
+
 <br>
 <br>
 
