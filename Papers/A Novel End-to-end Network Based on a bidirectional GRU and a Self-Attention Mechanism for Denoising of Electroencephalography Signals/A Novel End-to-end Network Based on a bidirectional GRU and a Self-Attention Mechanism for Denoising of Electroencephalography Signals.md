@@ -94,7 +94,7 @@ self-attention mechanism은 외부 정보에 대한 의존도를 감소시키고
 
 
 ```
-RNN - GRU, LSTM - attention, seq2seq - transformer
+RNN, Bidirectional RNN - GRU, LSTM - attention - seq2seq (single or multi) - transformer
 
 BG-Attention
 
