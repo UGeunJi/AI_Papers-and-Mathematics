@@ -1,4 +1,7 @@
 ## [출처](https://heeya-stupidbutstudying.tistory.com/49)
+## [LSTM과 Seq2Seq 참고자료](https://velog.io/@rjtp5670/%EC%8B%9C%EA%B3%84%EC%97%B4)
+
+<br>
 
 # Sequence to Sequence
 
@@ -8,7 +11,7 @@ seq2seq는 쉽게 말하면 **시퀀스 형태의 입력값을 시퀀스 형태�
 
 ![image](https://github.com/UGeunJi/AI_Papers-and-Mathematics/assets/84713532/facafee1-1018-4470-b9fc-0f2705b715f1)
 
-RNN 셀이 구성을 달리해 사용되었을 뿐 원리가 바뀐 것은 아니다. Seq2Seq 모델은 **인코더(Encoder)와 디코더(Decoder) 구조로 이루어져 있으며 각각의 역할은 다음과 같다.
+RNN 셀이 구성을 달리해 사용되었을 뿐 원리가 바뀐 것은 아니다. Seq2Seq 모델은 **인코더(Encoder)와 디코더(Decoder) 구조**로 이루어져 있으며 각각의 역할은 다음과 같다.
 
 <br>
 
@@ -44,23 +47,23 @@ RNN 셀이 구성을 달리해 사용되었을 뿐 원리가 바뀐 것은 아�
 ex) "I an a student"라는 영어 문장을 "je suis étudiant"라는 프랑스어 문장으로 변환 과정
 
 - 인코딩 후 각 단어는 임베딩 벡터로 바뀐 후 입력값으로 사용됨. 인코더와 디코더에서의 입력값은 하나의 단어가 된다.
-- 최초 입력값: <sos>라는 special token 사용
-- 최종 출력값: <eos>라는 special token이 나오면 문장의 끝으로 간주
+- 최초 입력값: sos라는 special token 사용
+- 최종 출력값: eos라는 special token이 나오면 문장의 끝으로 간주
 
 <br>
 
 ### 변환 요약
 
-**고정된 문장의 길이를 정하기 위해 데이터 전처리 과정에서 특정 문자 길이로 자른 후,** 패딩 처리 및 <sos>, <eos> 등의 각종 토큰을 넣어야 한다. <br>
-(굳이 <sos>와 같을 필요는 없다)
+**고정된 문장의 길이를 정하기 위해 데이터 전처리 과정에서 특정 문자 길이로 자른 후,** 패딩 처리 및 sos, eos 등의 각종 토큰을 넣어야 한다. <br>
+(굳이 sos와 같을 필요는 없다)
 
 <br>
 
 ### 훈련 과정
 
-**훈련 과정**에서는 디코더에게 인코더가 보낸 context vector C와 실제 정답인 je suis étudiant <eos>를 번역할 문장과 함께 훈련시킨다. <br>
-반면 **테스트 과정**에서 디코더는 C와 시작 토큰인 <sos>만을 입력으로 받게 된다. <br>
-**<sos>로 시작해서 그 뒤에 나올 단어들을 소프트맥스 함수를 통해 연이어 예측**한다.
+**훈련 과정**에서는 디코더에게 인코더가 보낸 context vector C와 실제 정답인 je suis étudiant eos를 번역할 문장과 함께 훈련시킨다. <br>
+반면 **테스트 과정**에서 디코더는 C와 시작 토큰인 sos만을 입력으로 받게 된다. <br>
+**sos로 시작해서 그 뒤에 나올 단어들을 소프트맥스 함수를 통해 연이어 예측**한다.
 
 <br>
 
@@ -131,34 +134,56 @@ $$Attention(Q, K, V) = Attention Value$$
 이를 통해 생성된 **어텐션 값(attention score or attention value)는 각 단어 간의 관계를 측정한 값**이라고 할 수 있다. <br>
 또, 위의 어텐션 값을 하나의 테이블로 만들면 **어텐션 맵(attention map)**이 된다.
 
+```
+어텐션 함수 정확히 수식을 통해 어떻게 적용되는지 알아볼 필요가 있다.
+```
 
+## Self-Attention
 
+#### Attention과 Self-Attention의 차이는 무엇인가?
 
+![image](https://github.com/UGeunJi/AI_Papers-and-Mathematics/assets/84713532/29f655d6-8a72-4501-80c5-5c3c8597f9da)
 
+1. 인코더의 Self-Attention: Query = Key = Value
+2. 디코더의 Maked Self-Attention: Query = Key = Value
+3. 디코더의 Encoder-Decoder Attention: Query: 디코더 벡터 / Key = Value: 인코더 벡터
 
+Query와 Key, 그리고 Value가 동일한 부분에 있을 때 Self-Attention이 되고, 디코더와 인코더가 나눠져 있으면 그냥 Attention이 된다. <br>
+(= Self-Attention은 본질적으로 Query, key, value가 동일한 경우를 말한다. 반면, Encoder-Decoder Attention에서는 Query가 Decoder의 벡터인 반면에 Key와 Value가 인코더의 벡터이므로 셀프 어텐션이라고 부르지 않는다.)
 
+```
+Here's the list of difference that I know about attention (AT) and self-attention (SA).
 
+1. In neural networks you have inputs before layers, activations (outputs) of the layers and in RNN you have states of the layers. If AT is used at some layer - the attention looks to (i.e. takes input from) the activations or states of some other layer. If SA is applied - the attention looks at the inputs of the same layer where it's applied.
+2. AT is often applied to transfer information from encoder to decoder. I.e. decoder neurons receive addition input (via AT) from the encoder states/activations. So in this case AT connects 2 different components - encoder and decoder. If SA is applied - it doesn't connect 2 different components, it's applied within one component. There may be no decoder at all if you use SA, as for example in BERT architecture.
+3. SA may be applied many times independently within a single model (e.g. 18 times in Transformer, 12 times in BERT BASE) while AT is usually applied once in the model and connects some 2 components (e.g. encoder and decoder).
+```
 
+#### Self-Attention 반영
 
+> 1. 각 단어의 벡터값을 통해 어텐션 값을 구한다.
 
+텍스트의 의미 정보를 벡터로 표현해서 **유사도 점수**를 계산한다. 가령 트랜스포머 모델에서는 단어 벡터끼리의 내적 연산(dot product)을 통해 계산한다.
 
+![image](https://github.com/UGeunJi/AI_Papers-and-Mathematics/assets/84713532/34cdf86f-f71d-43ba-8c56-0388ed260e5b)
 
+<br>
 
+> 2. Softmax 함수를 통해 어텐션 값을 확률값으로 표현한다.
 
+Attention 값이 모여있는 어텐션 맵에 소프트맥스 함수를 적용한다. <br>
+이렇게 되면 어텐션 맵이 특정 단어에 대한 다른 언어와의 연관도 값의 확률로 나타나게 된다.
 
+<br>
 
+> 3. 확률값과 기존의 각 단어 벡터를 가중합한다.
 
+여기서 가중합이란, 각 확률값과 각 단어 벡터를 곱한 후 더하는 연산이다.
 
+![image](https://github.com/UGeunJi/AI_Papers-and-Mathematics/assets/84713532/a683f2ac-f68a-42f7-9ae1-c0d0c355dc7e)
 
+<br>
 
+모든 단계를 거쳐 Self-Attention이 진행되는 과정은 다음과 같다.
 
-
-
-
-
-
-
-
-
-
-
+![Self-Attention](https://github.com/UGeunJi/AI_Papers-and-Mathematics/assets/84713532/c605ed9b-67e6-48ec-861f-9049f2808aee)
