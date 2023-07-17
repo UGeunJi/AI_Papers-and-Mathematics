@@ -289,5 +289,21 @@ GPU 사용방법 익혀놔야겠다.
 
 ## EMG 실행결과
 
-### 실행결과 옮겨놓고 새 file 만들어서 GPU 실행 과정이랑 시각화 결과 만들기
-### 그 다음은 모델링 과정 ㄱㄱ
+![image](https://github.com/UGeunJi/AI_Papers-and-Mathematics/assets/84713532/66805f9b-cd9d-44a4-a509-e405c759f66f)
+
+<br>
+
+## 실행결과 saved file
+
+![image](https://github.com/UGeunJi/AI_Papers-and-Mathematics/assets/84713532/5f9c32f6-35d5-4682-bd73-a0b25c2a9807)
+
+#### file structure
+
+- EEG_Result
+  - 1
+    - denoise_model
+    - nn_output
+      - 결과 확인할 수 있는 npy file 여기있음
+    - test
+    - train
+- EMG_Result
