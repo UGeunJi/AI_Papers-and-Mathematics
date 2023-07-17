@@ -262,7 +262,8 @@ else:
 
 saved_model, history = train(model, noiseEEG_train, EEG_train, noiseEEG_val, EEG_val, 
                       epochs, batch_size,optimizer, denoise_network, 
-                      result_location, foldername , train_num = str(i))                        # steel the show   /   movie soul
+                      result_location, foldername , train_num = str(i))
+
 
 #denoised_test, test_mse = test_step(saved_model, noiseEEG_test, EEG_test)
 
@@ -285,3 +286,8 @@ np.save(result_location +'/'+ foldername + '/'+ str(i)  +'/'+ "nn_output" + '/'+
 실행시켜놓고 퇴근해야겠다. 7시 반에서 8시 사이에 귀가할 생각인데, 오류없으면 그동안 결과 시각화 시키거나
 GPU 사용방법 익혀놔야겠다.
 ```
+
+## EMG 실행결과
+
+### 실행결과 옮겨놓고 새 file 만들어서 GPU 실행 과정이랑 시각화 결과 만들기
+### 그 다음은 모델링 과정 ㄱㄱ
