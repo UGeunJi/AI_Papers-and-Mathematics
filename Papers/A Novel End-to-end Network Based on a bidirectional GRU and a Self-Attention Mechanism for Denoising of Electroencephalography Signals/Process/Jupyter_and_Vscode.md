@@ -30,3 +30,13 @@ jupyter notebook
   - 인바운드 규칙 / 새 규칙
     - 포트
       - 포트 번호 and nickname 설정
+
+<br>
+<br>
+
+---
+
+## vscode
+
+구글에 mobaxterm 검색 <br>
+서버 에디터 다운받고 ssh 서버 접속하고 정보 수정하고 비번 입력해서 들어가면 끝
