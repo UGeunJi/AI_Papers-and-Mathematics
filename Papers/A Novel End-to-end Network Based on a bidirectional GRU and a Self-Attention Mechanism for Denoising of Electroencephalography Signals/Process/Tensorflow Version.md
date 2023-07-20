@@ -29,6 +29,7 @@ conda install cudatoolkit
 ```
 
 ### [참고 블로그](https://blog.naver.com/plc96)
+### [참고 링크](https://stackoverflow.com/questions/70967651/could-not-load-dynamic-library-libcudart-so-11-0)
 
 모두 실행하고 나니 이제 코드가 돌아간다. 나머지 없는 패키지들 다운받고 모델 디버그 시작해야겠다.
 
