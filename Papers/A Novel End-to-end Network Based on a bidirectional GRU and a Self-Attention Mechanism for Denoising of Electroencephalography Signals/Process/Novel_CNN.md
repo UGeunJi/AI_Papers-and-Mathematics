@@ -1,0 +1,149 @@
+```
+GPU 서버는 CuDNN에서 막혀서 결국 해내지 못했다.. 양한열 선배님께 도움을 요청했지만 docker를 사용하라고 하셨다. <br>
+캐나다에 학회 가신 일주일 동안은 내가 사용할 수 있게 되었지만 그 후에는 내가 직접 구축해야 된다...
+```
+
+## 코드
+
+```py
+import tensorflow as tf
+import numpy as np
+import os
+from tensorflow import keras
+from tensorflow.keras import layers,Sequential
+from tensorflow.keras.models import *
+from tensorflow.keras.layers import *
+from tensorflow.keras.optimizers import *
+from tensorflow.keras.callbacks import ModelCheckpoint, LearningRateScheduler
+from tensorflow.keras import backend as keras
+from tensorflow.keras import datasets, layers, models, Input, Sequential
+
+def Novel_CNN(datanum):
+    model = tf.keras.Sequential()
+    model.add(Input(shape=(datanum, 1)))
+
+    model.add(layers.Conv1D(32, 3, activation = tf.nn.relu, padding = 'same', kernel_initializer = 'he_normal'))
+    model.add(layers.Conv1D(32, 3, activation = tf.nn.relu, padding = 'same', kernel_initializer = 'he_normal'))
+    model.add(layers.AveragePooling1D(pool_size= 2))
+
+    model.add(layers.Conv1D(64, 3, activation = tf.nn.relu, padding = 'same', kernel_initializer = 'he_normal'))
+    model.add(layers.Conv1D(64, 3, activation = tf.nn.relu, padding = 'same', kernel_initializer = 'he_normal'))
+    model.add(layers.AveragePooling1D(pool_size= 2))
+
+    model.add(layers.Conv1D(128, 3, activation = tf.nn.relu, padding = 'same', kernel_initializer = 'he_normal'))
+    model.add(layers.Conv1D(128, 3, activation = tf.nn.relu, padding = 'same', kernel_initializer = 'he_normal'))
+    model.add(layers.AveragePooling1D(pool_size= 2))
+
+    model.add(layers.Conv1D(256, 3, activation = tf.nn.relu, padding = 'same', kernel_initializer = 'he_normal'))
+    model.add(layers.Conv1D(256, 3, activation = tf.nn.relu, padding = 'same', kernel_initializer = 'he_normal'))
+    model.add(layers.Dropout(0.5))
+    model.add(layers.AveragePooling1D(pool_size = 2))
+
+    model.add(layers.Conv1D(512, 3, activation = tf.nn.relu, padding = 'same', kernel_initializer = 'he_normal'))
+    model.add(layers.Conv1D(512, 3, activation = tf.nn.relu, padding = 'same', kernel_initializer = 'he_normal'))
+    model.add(layers.Dropout(0.5))
+    model.add(layers.AveragePooling1D(pool_size = 2))
+
+    model.add(layers.Conv1D(1024, 3, activation = tf.nn.relu, padding = 'same', kernel_initializer = 'he_normal'))
+    model.add(layers.Conv1D(1024, 3, activation = tf.nn.relu, padding = 'same', kernel_initializer = 'he_normal'))
+    model.add(layers.Dropout(0.5))
+    model.add(layers.AveragePooling1D(pool_size = 2))
+
+    model.add(layers.Conv1D(2048, 3, activation = tf.nn.relu, padding = 'same', kernel_initializer = 'he_normal'))
+    model.add(layers.Conv1D(2048, 3, activation = tf.nn.relu, padding = 'same', kernel_initializer = 'he_normal'))
+    model.add(layers.Dropout(0.5))
+    #######
+    model.add(layers.Flatten())
+    #output1 = layers.Dense(2048)(flatten1)
+    model.add(layers.Dense(datanum))
+    #model = Model(inputs = inputs, outputs = output1)
+
+    model.summary()
+    return model
+
+
+
+'''
+def Novel_CNN(datanum):
+
+    model = tf.keras.Sequential()
+    inputs = Input(shape=(datanum,))
+    conv1 = layers.Conv1D(32, 3, activation = 'relu', padding = 'same', kernel_initializer = 'he_normal')
+    conv1 = layers.Conv1D(32, 3, activation = 'relu', padding = 'same', kernel_initializer = 'he_normal')
+    pool1 = layers.AveragePooling1D(pool_size= 2)(conv1)
+
+    conv2 = layers.Conv1D(64, 3, activation = 'relu', padding = 'same', kernel_initializer = 'he_normal')
+    conv2 = layers.Conv1D(64, 3, activation = 'relu', padding = 'same', kernel_initializer = 'he_normal')
+    pool2 = layers.AveragePooling1D(pool_size= 2)(conv2)
+
+    conv3 = layers.Conv1D(128, 3, activation = 'relu', padding = 'same', kernel_initializer = 'he_normal')
+    conv3 = layers.Conv1D(128, 3, activation = 'relu', padding = 'same', kernel_initializer = 'he_normal')
+    pool3 = layers.AveragePooling1D(pool_size= 2)(conv3) #9
+
+    conv4 = layers.Conv1D(256, 3, activation = 'relu', padding = 'same', kernel_initializer = 'he_normal')
+    conv4 = layers.Conv1D(256, 3, activation = 'relu', padding = 'same', kernel_initializer = 'he_normal')
+    drop4 = layers.Dropout(0.5)(conv4)
+    pool4 = layers.AveragePooling1D(pool_size = 2)(drop4)  #13
+
+    conv5 = layers.Conv1D(512, 3, activation = 'relu', padding = 'same', kernel_initializer = 'he_normal')
+    conv5 = layers.Conv1D(512, 3, activation = 'relu', padding = 'same', kernel_initializer = 'he_normal')
+    drop5 = layers.Dropout(0.5)(conv5)
+    ###
+    pool5 = layers.AveragePooling1D(pool_size = 2)(drop5)
+
+    conv6 = layers.Conv1D(1024, 3, activation = 'relu', padding = 'same', kernel_initializer = 'he_normal')
+    conv6 = layers.Conv1D(1024, 3, activation = 'relu', padding = 'same', kernel_initializer = 'he_normal')
+    drop6 = layers.Dropout(0.5)(conv6)
+
+    pool6 = layers.AveragePooling1D(pool_size = 2)(drop6)
+
+    conv7 = layers.Conv1D(2048, 3, activation = 'relu', padding = 'same', kernel_initializer = 'he_normal')
+    conv7 = layers.Conv1D(2048, 3, activation = 'relu', padding = 'same', kernel_initializer = 'he_normal')
+    drop7 = layers.Dropout(0.5)(conv7)
+    #######
+    flatten1 = layers.Flatten()(drop7)
+    #output1 = layers.Dense(2048)(flatten1)
+    output1 = layers.Dense(1024)(flatten1)
+    #model = Model(inputs = inputs, outputs = output1)
+
+    model.summary()
+    return model
+
+'''
+```
+
+#### 주석 처리된 부분은 github에 올라와있는 코드인데 선배님이 수정해주셔서 위와 같은 코드가 되었다.
+
+이전의 문제는 아래와 같았다.
+
+```
+Input 0 of layer "conv1d" is incompatible with the layer: expected min_ndim=3, found ndim=2. Full shape received: (1, 512)
+```
+
+입력값에 문제가 있는 것을 보고 다른 network와 이전 Novel CNN 코드를 참고해서 수정했다.
+
+`model.add(Input(shape=(datanum)))` -> `model.add(Input(shape=(datanum, 1)))`
+
+실행이 된다.
+
+맞는 건진 모르겠지만 오차가 매우 적다. <br>
+이거 보면서 느낀 건 batch와 함께 입출력 차원을 자세히 공부해야겠다는 생각이 들었다.
+
+내일 보고드리면 BiGRU, BG-Attention network를 작성하라고 하실 거다. <br>
+드디어 GPU 서버를 쓸 수 있게 되었으니, 다른 방법으로 해결해야 하지만 또 잘 극복해낼 것이다.
+
+<br>
+
+---
+
+## To do list
+
+- 출력 결과 시각화 및 분석
+- BiGRU, BG-Attention network coding
+- 연구 소개 자료 작성
+- docker? (일주일 후)
+
+<br>
+<br>
+
+> 내일 결과 시각화 한번 해볼건데 왔는데 또 블루스크린이 되어있진 않을까 두렵다...
