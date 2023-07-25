@@ -1,0 +1,180 @@
+```
+EEG_test는 어따 쓰는 건지 모르겠고, noiseinput, loss_history, denoiseoutput이 있다.
+여기서 어떤 걸 어디에 사용해서 결과물을 내야할지 생각해봐야한다.
+```
+
+<br>
+
+- SNR 별 노이즈 제거 전후 plot chart (EOG, EMG)
+- 모델 별 x축=SNR/dB, y축=SNR/dB
+- 모델 별 x축=SNR/dB, y축=RRMSE
+- 모델 별 x축=Frequency/hZ, y축=PSD(dB/hZ)
+- 모델 별 x축=SNR/dB, y축=CC (EOG, EMG)
+- 이 밖의 table들...
+
+<br>
+
+우선 모델도 여러개 훈련시켜봐야하고 행렬값 전체 계산도 알아봐야 한다. 그리 어려울 것 같진 않다. <br>
+모델 구성과 훈련에 좀 더 집중할 수 있겠다.
+
+<br>
+
+# 우선 아래의 항목들의 결과를 도출해내야 한다.
+
+- SNR (Signal Noise Ratio)
+
+- PSD (Power Spectral Density)
+
+- CC (Correlation)
+
+- RRMSE (Relative Root Mean Squared Error)
+
+- dB
+
+- hZ
+
+<br>
+
+---
+
+## 1. SNR
+
+Signal-to-Noise Ratio로 공식은 다음과 같다.
+
+$$SNR = 10 ~ log \frac{RMS(x)}{RMS(\lambda n)}$$
+
+RMS는 Root Mean Squared로 각 값을 제곱하고 평균으로 나눈 뒤, 그것에 root를 씌우면 된다.
+
+Noise가 높으면 lambda 값도 높고 SNR 값은 낮아진다.
+
+문제는 x와 lambda X n이다. 저것을 어떻게 가져와서 구분할 수 있을까.
+
+> data_prepare.py
+
+```py
+#create random number between -10dB ~ 2dB
+    SNR_train_dB = np.random.uniform(-7, 2, (EEG_train.shape[0]))
+    print(SNR_train_dB.shape)
+    SNR_train = 10 ** (0.1 * (SNR_train_dB))
+
+    # combin eeg and noise for training set 
+    noiseEEG_train=[]
+    NOISE_train_adjust=[]
+    for i in range (EEG_train.shape[0]):
+        eeg=EEG_train[i].reshape(EEG_train.shape[1])
+        noise=NOISE_train[i].reshape(NOISE_train.shape[1])
+
+        coe=get_rms(eeg)/(get_rms(noise)*SNR_train[i])
+        noise = noise*coe
+        neeg = noise+eeg
+
+        NOISE_train_adjust.append(noise)
+        noiseEEG_train.append(neeg)
+
+    noiseEEG_train=np.array(noiseEEG_train)
+    NOISE_train_adjust=np.array(NOISE_train_adjust)    
+
+    # variance for noisy EEG
+    EEG_train_end_standard = []
+    noiseEEG_train_end_standard = []
+
+    for i in range(noiseEEG_train.shape[0]):
+        # Each epochs divided by the standard deviation
+        eeg_train_all_std = EEG_train[i] / np.std(noiseEEG_train[i])
+        EEG_train_end_standard.append(eeg_train_all_std)
+
+        noiseeeg_train_end_standard = noiseEEG_train[i] / np.std(noiseEEG_train[i])
+        noiseEEG_train_end_standard.append(noiseeeg_train_end_standard)
+
+    noiseEEG_train_end_standard = np.array(noiseEEG_train_end_standard)
+    EEG_train_end_standard = np.array(EEG_train_end_standard)
+    print('training data prepared', noiseEEG_train_end_standard.shape, EEG_train_end_standard.shape)
+```
+
+이 부분을 보면 SNR 비를 정하고 계수에 넣어서 노이즈를 섞은 뒤, append와 expend 함수를 통해 리스트에 추가한다.
+
+#### 그럼 여기서 2가지 방법이 떠오른다.
+
+```
+1. 우선 추가되는 값을 append할 때 list를 하나 더 선언해서 결과값으로 나오도록 하는 것이다. 그럼 특정 주파수의 값들을 얻을 수 있을 것이다.
+2. 전체개수에서 정확하게 맞아떨어지는지를 확인하고 그 개수대로 리스트 슬라이싱을 활용하여 값을 가져와 사용한다.
+```
+
+<br>
+<br>
+
+---
+
+## PSD (Power Spectral Density)
+
+주파수 스팩트럼 밀도로 신호 주파수에 따른 전력 밀도의 분포라고 한다.
+
+자세한 의미는... 알아봐야겠지,,, 다음에 알아보고 우선 정리부터 하자.
+
+공식은 복잡하면 복잡하게 구할 수 있지만, 논문에서는 dB/hZ로 표시했다. 우선 hZ와 dB를 구하고 해결해야 할 것 같다.
+
+$$\frac{dB}{hZ}$$
+
+<br>
+<br>
+
+---
+
+## CC (Correlation Coefficient)
+
+상관관계를 나타내는 계수로 값이 높아진다는 것은 non-linearity가 높다는 것을 의미한다.
+
+공식은 아래와 같다.
+
+$$CC = \frac{Cov(f(y)), x)}{\sqrt{Var(f(y))Var(x)}}$$
+
+Cov는 공분산을 의미하고, Var은 분산을 의미한다. f(y)는 또 어떻게 구하는 걸까.
+
+`CC: Correlation between the benchmark signal and processed signal`
+
+<br>
+<br>
+
+---
+
+## RRMSE (Relative Root Mean Squared Error)
+
+$$RRMSE = \frac{RMS(f(y) - x)}{RMS(x)}$$
+
+여기서도 f(y)가 나온다. 이거 알아봐야겠다.
+
+그래도 Cov나 Var은 없어서 그나마 나은 것 같다.
+
+`RRMSE: Index evaluates the average dirrence between the benchmark signal and the processed signal`
+
+<br>
+<br>
+
+---
+
+## dB
+
+### [참고 링크](https://blog.naver.com/PostView.naver?blogId=realize66&logNo=30035958899)
+
+이 링크를 보면 dB을 구하는 공식과 정의가 나와있다.
+
+우선 공식은 아래와 같다.
+
+$$ 10 ~ log x$$
+
+x에 들어갈 값에 따라 dB 값이 달라지는 것이다. <br>
+링크에서는 전압이 x로 들어가는 것으로 나오지만 나는 그래프에 나오는 파형이 x값으로 들어가는 것이라고 생각했다. <br>
+곧 파형의 크기, altitude를 의미하는 것이다. 근데 0이 되는 기준은 어디고 매 값마다 계산했는지는 확인해봐야한다.
+
+<br>
+<br>
+
+---
+
+## hZ
+
+아주 미스터리스러운 부분이다. 우선 공식은 이렇다.
+
+$$ f = \frac{1}{T}$$
+
+주기를 이용해서 출력하는 것 같은데, 논문에서는 x축의 크기가 120정도가 된다. 구해야 할 때 계산해봐야겠다.
