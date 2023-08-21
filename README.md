@@ -13,3 +13,5 @@
 - [Rethinking the Inception Architecture for Computer Vision](https://github.com/UGeunJi/AI_Papers-and-Mathematics/tree/main/Papers/Rethinking%20the%20Inception%20Architecture%20for%20Computer%20Vision)
 
 - [A Novel End-to-end Network Based on a bidirectional GRU and a Self-Attention Mechanism for Denoising of Electroencephalography Signals](https://github.com/UGeunJi/AI_Papers-and-Mathematics/tree/main/Papers/A%20Novel%20End-to-end%20Network%20Based%20on%20a%20bidirectional%20GRU%20and%20a%20Self-Attention%20Mechanism%20for%20Denoising%20of%20Electroencephalography%20Signals)
+
+- [A GAN Guided Parallel CNN and Transformer Network for EEG Denoising](https://github.com/UGeunJi/AI_Papers-and-Mathematics/tree/main/Papers/A%20GAN%20Guided%20Parallel%20CNN%20and%20Transformer%20Network%20for%20EEG%20Denoising)
