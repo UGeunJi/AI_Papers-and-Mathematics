@@ -88,3 +88,12 @@ Progressive GAN 교육은 교육 중에 생성자와 판별자 모두의 복잡�
 DCGAN은 Deep Convolutional Neural Network를 Generator와 Discriminator로 사용합니다.
 그들은 GAN 훈련을 안정화하고 고품질 이미지를 생성하는 데 중요한 역할을 했습니다.
 ```
+
+<br>
+
+> Attention GAN
+
+```
+NLP 분야에 속하는 Attention 메커니즘을 사용하는 Text-to-Image 기술을 통해서 GAN 구조를 완성했습니다.
+그리고 이미지 파츠별 파인튜닝도 가능합니다.
+```
