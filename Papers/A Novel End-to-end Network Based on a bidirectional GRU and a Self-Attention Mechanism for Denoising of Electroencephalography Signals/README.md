@@ -4,7 +4,6 @@
 2. pure 데이터, contaminated data 확인
 3. 코드 실행
 4. 실행 결과 논문과 비교
-5. 코드 변환 (kears to pytorch)
 
 <br>
 
