@@ -52,3 +52,4 @@ Loss function을 원하는 방향으로 줄여나가는 것에 중점을 맞추�
 1. One epoch의 동작에서의 Loss function
 2. Generator에서 parallel 구조로 쌓은 이유
 3. 왜 구조를 저렇게 쌓았는가 - (다른 구조와 비교하며 굳이 저렇게 쌓은 이유를 reference와 함께 확인하기)
+4. feature matching 왜 사용? - Loss function과 관련있음
