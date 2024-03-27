@@ -51,3 +51,38 @@
 #### 모든 레퍼런스를 저장하는 곳
 
 ### EndNote를 시작할 때 Library 생성 필수
+
+<br>
+
+---
+
+<br>
+
+## 레퍼런스 수집
+
+#### 자료 수집을 위해 논문에 참고할 레퍼런스들을 Library에 반입
+
+1. Import from PDF
+2. Direct Export
+3. EndNote Search
+4. Manual Data
+
+
+## 레퍼런스 관리
+
+#### Library에 반입한 레퍼런스들을 효율적으로 관리
+
+1. Group Management
+2. Reference Management
+3. PDF Management
+4. Reference 영향력 파악
+
+
+## 레퍼런스 활용
+
+#### 논문 작성을 위해 EndNote와 MS-Word를 연동, 수집한 레퍼런스 인용 삽입 및 참고문헌 리스트를 작성
+
+1. Output Style
+2. Citation
+3. Reference
+4. Manuscript Matcher
